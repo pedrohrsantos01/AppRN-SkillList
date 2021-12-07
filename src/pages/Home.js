@@ -11,7 +11,11 @@ import {
 
  export function Home() {
     const [newSkill, setNewSkill] = useState('');
-    const [mySkills, addNewSkill] = useState([]);
+    const [mySkills, setMySkill] = useState([]);
+
+    function handleAddNewSkill() {
+        setMySkill(oldstate => [...oldstate, newSkill])
+    }
 
 
    return(
@@ -29,6 +33,7 @@ import {
         <TouchableOpacity 
         style={styles.Button} 
         activeOpacity={0.7}
+        onPress={handleAddNewSkill}
         >
             <Text style ={styles.ButtonText}>
                 Add Skill
@@ -39,15 +44,19 @@ import {
             My Skills
         </Text>
 
-        <TouchableOpacity 
-        style={styles.skill}
-        activeOpacity={.6}
-        >
-        <Text style={styles.skillText}>
-            {newSkill}
-        </Text>
-        </TouchableOpacity>
-        
+        {
+            mySkills.map(skill => (
+            <TouchableOpacity 
+                style={styles.skill}
+                activeOpacity={.6}
+                key={skill}
+                >
+                <Text style={styles.skillText}>
+                    {skill}
+                </Text>
+            </TouchableOpacity>
+           ))
+        }    
      </SafeAreaView>
     
    )
