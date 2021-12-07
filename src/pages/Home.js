@@ -5,14 +5,14 @@ import {
   SafeAreaView,
   TextInput,
   Platform,
-  TouchableOpacity
+  TouchableOpacity,
  } from "react-native";
 
 
  export function Home() {
     const [newSkill, setNewSkill] = useState('');
+    const [mySkills, addNewSkill] = useState([]);
 
-    
 
    return(
      <SafeAreaView style={styles.container}>
@@ -36,9 +36,18 @@ import {
         </TouchableOpacity>
     
         <Text style={[styles.Text, {marginTop: 30 , fontSize: 30 }]}>
+            My Skills
+        </Text>
+
+        <TouchableOpacity 
+        style={styles.skill}
+        activeOpacity={.6}
+        >
+        <Text style={styles.skillText}>
             {newSkill}
         </Text>
-         
+        </TouchableOpacity>
+        
      </SafeAreaView>
     
    )
@@ -78,5 +87,17 @@ import {
          fontSize: 20,
          fontWeight: 'bold',
          textAlign: 'center',
+     },
+     skill:{
+         backgroundColor: '#1F1E25',
+         padding: 20,
+         borderRadius: 40,
+         marginTop: 25,
+         alignItems: 'center',
+     },
+     skillText: {
+         color: 'white',
+         fontSize: 22,
+         fontWeight: 'bold',
      }
  })
