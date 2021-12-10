@@ -1,11 +1,11 @@
-import React, {useState} from "react";
+import React, {useState , useEffect} from "react";
 import { 
   Text,
   StyleSheet,
   SafeAreaView,
   TextInput,
   Platform,
-  TouchableOpacity,
+  FlatList,
  } from "react-native";
 import { Button } from "../components/Button";
 import { SkillCard } from "../components/SkillCard";
@@ -14,15 +14,32 @@ import { SkillCard } from "../components/SkillCard";
  export function Home() {
     const [newSkill, setNewSkill] = useState('');
     const [mySkills, setMySkill] = useState([]);
+    const [greeting, setGreeting] = useState('');
+
+
 
     function handleAddNewSkill() {
         setMySkill(oldstate => [...oldstate, newSkill])
     }
 
+    useEffect(() => {
+        const currentHour = new Date().getHours();
+
+       if (currentHour < 12) {
+            setGreeting('Bom Dia!')
+        } else if ( currentHour >= 12 && currentHour <= 18){
+            setGreeting('Boa Tarde!')
+        } else {
+            setGreeting('Boa Noite!')
+        }
+
+        console.log(mySkills)
+    },[mySkills])
 
    return(
      <SafeAreaView style={styles.container}>
        <Text style={styles.Text}> Hello, Guys! </Text>
+       <Text style={styles.greeting}> {greeting} </Text>
 
         <TextInput 
         style={styles.input}
@@ -38,12 +55,18 @@ import { SkillCard } from "../components/SkillCard";
             My Skills
         </Text>
 
-        {
-            mySkills.map(skill => (
-                <SkillCard key={skill}  skill={skill} />
-           ))
-        }    
+        <FlatList 
+            data={mySkills}
+            keyExtractor={item => item}
+            renderItem= {({item}) => (
+                <SkillCard skill={item} />
+            )}
+        />
+       
      </SafeAreaView>
+
+
+
     
    )
  }  
@@ -68,6 +91,11 @@ import { SkillCard } from "../components/SkillCard";
          color: '#FFFFFF',
          fontSize: 20,
          padding: Platform.OS == 'ios' ? 15 : 10,
-         marginTop: 30
+         marginTop: 30,
      },
+     greeting: {
+         color: '#FFFFFF',
+         fontSize: 20,
+         marginLeft: 5,
+     }
  })
