@@ -10,12 +10,15 @@ import {
 import { Button } from "../components/Button";
 import { SkillCard } from "../components/SkillCard";
 
- 
+interface SkillData {
+    id: String;
+    name: String;
+} 
 
 
  export function Home() {
     const [newSkill, setNewSkill] = useState('');
-    const [mySkills, setMySkill] = useState([]);
+    const [mySkills, setMySkill] = useState<SkillData[]>([]);
     const [greeting, setGreeting] = useState('');
 
 
@@ -56,7 +59,10 @@ import { SkillCard } from "../components/SkillCard";
         >
         </TextInput>
 
-       <Button Onpress={handleAddNewSkill} />
+       <Button 
+       title='Add'
+       onPress={handleAddNewSkill}
+       />
     
         <Text style={[styles.Text, {marginTop: 30 , fontSize: 30 }]}>
             My Skills
@@ -64,9 +70,9 @@ import { SkillCard } from "../components/SkillCard";
 
         <FlatList 
             data={mySkills}
-            keyExtractor={item => item}
+            keyExtractor={item => item.id}
             renderItem= {({item}) => (
-                <SkillCard skill={item} />
+                <SkillCard skill={item.name} />
             )}
         />
        
